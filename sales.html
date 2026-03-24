@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Sales</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<h2>Sales Form</h2>
+
+<a href="index.html">
+    <button class="back-btn">← Back</button>
+</a>
+
+<input type="text" id="product" placeholder="Product"><br>
+<input type="number" id="qty" placeholder="Quantity"><br>
+<button onclick="addSale()">Save</button>
+
+<h3>Sales List</h3>
+<table border="1" width="100%">
+    <tbody id="salesTable"></tbody>
+</table>
+
+<script src="script.js"></script>
+<script>
+function addSale() {
+    let data = {
+        product: document.getElementById("product").value,
+        qty: document.getElementById("qty").value
+    };
+    saveData("sales", data);
+    loadData("sales", "salesTable");
+}
+
+loadData("sales", "salesTable");
+</script>
+
+</body>
+</html>

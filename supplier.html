@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<h2>Supplier Module</h2>
+<button class="back-btn" onclick="location.href='index.html'">← Back</button>
+
+<form onsubmit="addSupplier(event)">
+<input id="name" placeholder="Name"><br><br>
+<input id="contact" placeholder="Contact"><br><br>
+<button>Add</button>
+</form>
+
+<table border="1">
+<tbody id="table"></tbody>
+</table>
+
+<script src="core.js"></script>
+<script>
+function load(){
+let data = getData("supplier")
+table.innerHTML=""
+
+data.forEach(d=>{
+table.innerHTML+=`
+<tr>
+<td>${d.SupplierID}</td>
+<td>${d.Name}</td>
+<td>${d.ContactInfo}</td>
+<td><button onclick="del(${d.SupplierID})">Delete</button></td>
+</tr>`
+})
+}
+
+function addSupplier(e){
+e.preventDefault()
+let data = getData("supplier")
+
+data.push({
+SupplierID: generateID(data,"SupplierID"),
+Name: name.value,
+ContactInfo: contact.value
+})
+
+saveData("supplier",data)
+load()
+}
+
+function del(id){
+saveData("supplier", getData("supplier").filter(d=>d.SupplierID!=id))
+load()
+}
+
+load()
+</script>
+
+</body>
+</html>

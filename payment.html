@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<h2>Payment Module</h2>
+<button class="back-btn" onclick="location.href='index.html'">← Back</button>
+
+<form onsubmit="addPayment(event)">
+<input id="sale" placeholder="Sale ID"><br><br>
+<input id="amount" placeholder="Amount"><br><br>
+<input id="method" placeholder="Method"><br><br>
+<button>Add</button>
+</form>
+
+<table border="1">
+<tbody id="table"></tbody>
+</table>
+
+<script src="core.js"></script>
+<script>
+function load(){
+let data = getData("payment")
+table.innerHTML=""
+
+data.forEach(d=>{
+table.innerHTML+=`
+<tr>
+<td>${d.PaymentID}</td>
+<td>${d.SaleID}</td>
+<td>${d.Amount}</td>
+<td>${d.Method}</td>
+<td><button onclick="del(${d.PaymentID})">Delete</button></td>
+</tr>`
+})
+}
+
+function addPayment(e){
+e.preventDefault()
+let data = getData("payment")
+
+data.push({
+PaymentID: generateID(data,"PaymentID"),
+SaleID: sale.value,
+Amount: amount.value,
+Method: method.value
+})
+
+saveData("payment",data)
+load()
+}
+
+function del(id){
+saveData("payment", getData("payment").filter(d=>d.PaymentID!=id))
+load()
+}
+
+load()
+</script>
+
+</body>
+</html>

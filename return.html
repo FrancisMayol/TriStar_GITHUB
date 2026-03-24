@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<h2>Return Module</h2>
+<button class="back-btn" onclick="location.href='index.html'">← Back</button>
+
+<form onsubmit="addReturn(event)">
+<input id="sale" placeholder="Sale ID"><br><br>
+<input id="qty" placeholder="Quantity"><br><br>
+<input id="reason" placeholder="Reason"><br><br>
+<button>Add</button>
+</form>
+
+<table border="1">
+<tbody id="table"></tbody>
+</table>
+
+<script src="core.js"></script>
+<script>
+function load(){
+let data = getData("returntable")
+table.innerHTML=""
+
+data.forEach(d=>{
+table.innerHTML+=`
+<tr>
+<td>${d.ReturnID}</td>
+<td>${d.SaleID}</td>
+<td>${d.Quantity}</td>
+<td>${d.Reason}</td>
+<td><button onclick="del(${d.ReturnID})">Delete</button></td>
+</tr>`
+})
+}
+
+function addReturn(e){
+e.preventDefault()
+let data = getData("returntable")
+
+data.push({
+ReturnID: generateID(data,"ReturnID"),
+SaleID: sale.value,
+Quantity: qty.value,
+Reason: reason.value
+})
+
+saveData("returntable",data)
+load()
+}
+
+function del(id){
+saveData("returntable", getData("returntable").filter(d=>d.ReturnID!=id))
+load()
+}
+
+load()
+</script>
+
+</body>
+</html>

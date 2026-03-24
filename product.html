@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Product</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<h2>Product Form</h2>
+
+<a href="index.html">
+    <button class="back-btn">← Back</button>
+</a>
+
+<input type="text" id="pname" placeholder="Product Name"><br>
+<input type="number" id="price" placeholder="Price"><br>
+<button onclick="addProduct()">Save</button>
+
+<h3>Product List</h3>
+<table border="1" width="100%">
+    <tbody id="productTable"></tbody>
+</table>
+
+<script src="script.js"></script>
+<script>
+function addProduct() {
+    let data = {
+        name: document.getElementById("pname").value,
+        price: document.getElementById("price").value
+    };
+    saveData("products", data);
+    loadData("products", "productTable");
+}
+
+loadData("products", "productTable");
+</script>
+
+</body>
+</html>

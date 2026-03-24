@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<h2>Inventory Module</h2>
+<button class="back-btn" onclick="location.href='index.html'">← Back</button>
+
+<table border="1">
+<tbody id="table"></tbody>
+</table>
+
+<script src="core.js"></script>
+<script>
+function load(){
+let inventory = getData("inventory")
+let products = getData("product")
+
+table.innerHTML=""
+
+inventory.forEach(inv=>{
+let product = products.find(p=>p.ProductID==inv.ProductID)
+
+table.innerHTML+=`
+<tr>
+<td>${inv.InventoryID}</td>
+<td>${product ? product.Name : "N/A"}</td>
+<td>${inv.QuantityInStock}</td>
+<td>
+<button onclick="add(${inv.InventoryID})">➕</button>
+<button onclick="minus(${inv.InventoryID})">➖</button>
+</td>
+<td><button onclick="del(${inv.InventoryID})">Delete</button></td>
+</tr>`
+})
+}
+
+function add(id){
+let data = getData("inventory")
+data.find(d=>d.InventoryID==id).QuantityInStock++
+saveData("inventory",data)
+load()
+}
+
+function minus(id){
+let data = getData("inventory")
+let item = data.find(d=>d.InventoryID==id)
+if(item.QuantityInStock>0) item.QuantityInStock--
+saveData("inventory",data)
+load()
+}
+
+function del(id){
+let inventory = getData("inventory")
+let item = inventory.find(i=>i.InventoryID==id)
+
+saveData("inventory", inventory.filter(i=>i.InventoryID!=id))
+saveData("product", getData("product").filter(p=>p.ProductID!=item.ProductID))
+
+load()
+}
+
+load()
+</script>
+
+</body>
+</html>
